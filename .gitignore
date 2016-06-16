@@ -1,0 +1,16 @@
+.settings
+.classpath
+.project
+.metadata
+.mymetadata
+.springBeans
+.externalToolBuilders
+.idea
+.architect
+*.iml
+*.ipr
+*.iws
+nbproject
+target
+/nodecellar-mongodb/src/node_modules/
+/nodecellar-redis/src/node_modules/
