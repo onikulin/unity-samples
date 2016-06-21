@@ -1,7 +1,7 @@
 var redis = require('redis');
 var config = require('../config.json');
 
-var client = redis.createClient(config.database.port, config.database.host, {db:config.database.db});
+var client = redis.createClient(config.database.port, config.database.host, {db:config.database.name});
 client.auth(config.database.password);
 
 client.on('connect', function() {
