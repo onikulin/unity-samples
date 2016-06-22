@@ -1,0 +1,21 @@
+# Reference on application template by its key
+template_key: NCDAFL1.0.1.MON
+
+# Build section
+build:
+  # Customization project folder mapping section
+  mapping:
+    - source: target/node-mongodb-cellar-1.0.0.tgz
+      target: application/nodecellar.tar.gz
+    - source: init-script/wines.json
+      target: scripts/wines.json
+
+# Path to the customization project archive
+archive: target/node-mongodb-cellar-1.0.0-project.zip
+
+# Name of the customization project
+name: $user.namespace - Node MongoDB Cellar App 1.0.0
+
+# Optional. The environment's name where customization project will be deployed.
+# It may also be overridden in 'project-customization deploy' command through the specia parameter --e (--environment).
+# environment:
