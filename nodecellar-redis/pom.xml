@@ -6,8 +6,35 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <properties>
+        <additionalDeployProperties></additionalDeployProperties>
+    </properties>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/node-package</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -15,50 +42,85 @@
                 <executions>
                     <execution>
                         <id>npm-install</id>
-                        <phase>generate-sources</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>cmd</executable>
-                            <commandlineArgs>/C "C:/Program Files/nodejs/npm" install</commandlineArgs>
-                            <workingDirectory>${project.basedir}/src</workingDirectory>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                            <workingDirectory>${project.build.directory}/node-package</workingDirectory>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
                     <execution>
-                        <id>build-nodecellar-application</id>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>nodecellar.xml</descriptor>
-                            </descriptors>
-                            <finalName>nodecellar</finalName>
-                        </configuration>
+                        <id>npm-pack</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>exec</goal>
                         </goals>
+                        <configuration>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>pack</argument>
+                                <argument>node-package</argument>
+                            </arguments>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>build-nodecellar-zip</id>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>nodecellarzip.xml</descriptor>
-                            </descriptors>
-                            <finalName>Node_Cellar_Redis_v_1.0.0.0</finalName>
-                        </configuration>
+                        <id>customization-project-build</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>exec</goal>
                         </goals>
+                        <configuration>
+                            <executable>unity</executable>
+                            <arguments>
+                                <argument>project-customization build --desc 'unity/nodecellar.yaml'</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>customization-project-publish</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>unity</executable>
+                            <arguments>
+                                <argument>project-customization publish --desc 'unity/nodecellar.yaml'</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>customization-project-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>unity</executable>
+                            <arguments>
+                                <argument>project-customization deploy --desc 'unity/nodecellar.yaml' ${additionalDeployProperties}</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

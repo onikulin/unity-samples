@@ -12,5 +12,3 @@
 *.iws
 nbproject
 target
-/nodecellar-mongodb/src/node_modules/
-/nodecellar-redis/src/node_modules/
