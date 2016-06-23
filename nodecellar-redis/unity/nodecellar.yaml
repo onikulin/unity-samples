@@ -6,7 +6,7 @@ build:
   # Customization project folder mapping section
   mapping:
     - source: target/node-redis-cellar-1.0.0.tgz
-      target: application/nodecellar.tar.gz
+      target: application/nodecellar.tgz
     - source: init-script/wines.txt
       target: scripts/wines.txt
 

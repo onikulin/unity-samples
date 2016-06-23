@@ -6,7 +6,7 @@ build:
   # Customization project folder mapping section
   mapping:
     - source: target/node-mongodb-cellar-1.0.0.tgz
-      target: application/nodecellar.tar.gz
+      target: application/nodecellar.tgz
     - source: init-script/wines.json
       target: scripts/wines.json
 
