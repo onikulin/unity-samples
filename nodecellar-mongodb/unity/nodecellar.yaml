@@ -14,7 +14,7 @@ build:
 archive: target/Node_Cellar_MongoDB_v_1.0.0.0.zip
 
 # Name of the customization project
-name: $user.namespace - Node Cellar MongoDB v 1.0.0.0
+name: $user.namespace - Node Cellar MongoDB v 1.0.1.0
 
 # Optional. The environment's name where customization project will be deployed.
 # It may also be overridden in 'project-customization deploy' command through the specia parameter --e (--environment).
